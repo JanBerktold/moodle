@@ -2,6 +2,7 @@ package moodle
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -20,7 +21,9 @@ func (client *Client) Login(username, password string) (err error) {
 		return err
 	}
 
-	fmt.Println(resp.Status)
+	if resp.Status != 200 {
+		return errors.New(strconv.Itoa(resp.StatusCode) + ": " + http.StatusText(resp.StatusCode))
+	}
 
 	return nil
 }
