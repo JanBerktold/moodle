@@ -1,5 +1,6 @@
 package moodle
 
+// https://github.com/PuerkitoBio/goquery
 import (
 	"bytes"
 	"errors"
@@ -7,6 +8,10 @@ import (
 	"strconv"
 	"net/url"
 )
+
+func validateLogin(body io.Reader) (err error) {
+	
+}
 
 func (client *Client) Login(username, password string) (err error) {
 
@@ -21,11 +26,12 @@ func (client *Client) Login(username, password string) (err error) {
 		return err
 	}
 
-	if resp.StatusCode != 200 {
-		return errors.New(strconv.Itoa(resp.StatusCode) + ": " + http.StatusText(resp.StatusCode))
+	if err := AssertHttpRequest(resp); err != nil {
+		return err
 	}
 
-	return nil
+	defer resp.Body.Close()
+	return validateLogin(resp.Body)
 }
 
 func (client *Client) Logout() (err error) {
