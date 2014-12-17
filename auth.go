@@ -3,14 +3,14 @@ package moodle
 // https://github.com/PuerkitoBio/goquery
 import (
 	"bytes"
-	"errors"
 	"net/http"
-	"strconv"
+	//"strconv"
+	"io"
 	"net/url"
 )
 
 func validateLogin(body io.Reader) (err error) {
-	
+	return nil
 }
 
 func (client *Client) Login(username, password string) (err error) {
